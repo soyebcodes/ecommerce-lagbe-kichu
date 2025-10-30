@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import { config } from "./config";
 import { ApiError } from "./errors/ApiError";
 import { errorHandler } from "./middlewares/errorHandler";
+import authRoutes from "./routes/auth.route";
 
 const app = express();
 
@@ -20,6 +21,9 @@ app.use(
 app.get("/", (req, res) => {
   res.json({ message: "API running..." });
 });
+
+//  auth routes
+app.use("/api/auth", authRoutes);
 
 // 404 route handler
 app.use(/.*/, (req, _res, next) => {
