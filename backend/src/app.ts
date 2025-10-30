@@ -6,6 +6,7 @@ import { ApiError } from "./errors/ApiError";
 import { errorHandler } from "./middlewares/errorHandler";
 import authRoutes from "./routes/auth.route";
 import testRoutes from "./routes/test.route";
+import productRoutes from "./routes/product.route";
 
 const app = express();
 
@@ -28,6 +29,9 @@ app.use("/api/auth", authRoutes);
 
 // Test route
 app.use("/api/test", testRoutes);
+
+// Product routes
+app.use("/api/products", productRoutes);
 
 // 404 route handler
 app.use(/.*/, (req, _res, next) => {
