@@ -5,6 +5,7 @@ import { config } from "./config";
 import { ApiError } from "./errors/ApiError";
 import { errorHandler } from "./middlewares/errorHandler";
 import authRoutes from "./routes/auth.route";
+import testRoutes from "./routes/test.route";
 
 const app = express();
 
@@ -24,6 +25,9 @@ app.get("/", (req, res) => {
 
 //  auth routes
 app.use("/api/auth", authRoutes);
+
+// Test route
+app.use("/api/test", testRoutes);
 
 // 404 route handler
 app.use(/.*/, (req, _res, next) => {
