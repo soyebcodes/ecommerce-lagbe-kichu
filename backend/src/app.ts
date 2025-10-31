@@ -11,6 +11,7 @@ import publicRoutes from "./routes/public.route";
 import orderRoutes from "./routes/order.route";
 import sellerOrderRoutes from "./routes/sellerOrder.route";
 import adminUserRoutes from "./routes/adminUser.route";
+import adminOrderRoutes from "./routes/adminOrder.route";
 
 const app = express();
 
@@ -48,6 +49,9 @@ app.use("/api/seller/orders", sellerOrderRoutes);
 
 // Admin user routes
 app.use("/api/admin/users", adminUserRoutes);
+
+// Admin order routes
+app.use("/api/admin/orders", adminOrderRoutes);
 
 // 404 route handler
 app.use(/.*/, (req, _res, next) => {
