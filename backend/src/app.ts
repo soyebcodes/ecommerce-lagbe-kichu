@@ -7,6 +7,7 @@ import { errorHandler } from "./middlewares/errorHandler";
 import authRoutes from "./routes/auth.route";
 import testRoutes from "./routes/test.route";
 import productRoutes from "./routes/product.route";
+import publicRoutes from "./routes/public.route";
 
 const app = express();
 
@@ -32,6 +33,9 @@ app.use("/api/test", testRoutes);
 
 // Product routes
 app.use("/api/products", productRoutes);
+
+// Public routes
+app.use("/api/public", publicRoutes);
 
 // 404 route handler
 app.use(/.*/, (req, _res, next) => {
