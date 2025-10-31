@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.route";
 import testRoutes from "./routes/test.route";
 import productRoutes from "./routes/product.route";
 import publicRoutes from "./routes/public.route";
+import orderRoutes from "./routes/order.route";
 
 const app = express();
 
@@ -36,6 +37,9 @@ app.use("/api/products", productRoutes);
 
 // Public routes
 app.use("/api/public", publicRoutes);
+
+// Buyer routes
+app.use("/api/orders", orderRoutes);
 
 // 404 route handler
 app.use(/.*/, (req, _res, next) => {
