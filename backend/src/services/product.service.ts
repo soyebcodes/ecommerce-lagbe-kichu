@@ -4,12 +4,13 @@ import { ApiError } from "../errors/ApiError";
 export const createProduct = async (
   sellerId: string,
   data: any,
-  files: Express.Multer.File[]
+  files?: Express.Multer.File[]
 ) => {
   const images = files
-    .filter((f) => f.mimetype.startsWith("image"))
-    .map((f) => f.path);
-  const videoFile = files.find((f) => f.mimetype.startsWith("video"));
+    ? files.filter((f) => f.mimetype.startsWith("image")).map((f) => f.path)
+    : []; // default empty array
+
+  const videoFile = files?.find((f) => f.mimetype.startsWith("video"));
 
   const product = await Product.create({
     ...data,

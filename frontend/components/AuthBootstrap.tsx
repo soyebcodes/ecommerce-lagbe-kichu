@@ -11,7 +11,7 @@ export default function AuthBootstrap() {
   useEffect(() => {
     (async () => {
       try {
-        const res: any = await refresh().unwrap();
+        const res: any = await refresh({}).unwrap();
         const { accessToken, user } = res.data ?? res;
         if (accessToken) dispatch(setCredentials({ accessToken, user }));
       } catch {}
