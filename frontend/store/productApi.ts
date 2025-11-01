@@ -1,21 +1,28 @@
 // api/productApi.ts
 import { apiSlice } from "./apiSlice";
 
+// Product API
 export const productApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    // --- PUBLIC ENDPOINTS ---
+    // =========================
+    // PUBLIC ENDPOINTS
+    // =========================
     getProducts: builder.query({
       query: () => "/public/products",
+      transformResponse: (response: any) => response.data, // <-- extract array
       providesTags: ["Product"],
     }),
+
     getProductById: builder.query({
       query: (id: string) => `/public/products/${id}`,
       providesTags: ["Product"],
     }),
 
-    // --- PROTECTED ENDPOINTS (SELLER / ADMIN) ---
+    // =========================
+    // SELLER / ADMIN ENDPOINTS (Protected)
+    // =========================
     getMyProducts: builder.query({
-      query: () => "/products",
+      query: () => "/products", // protected route
       providesTags: ["Product"],
     }),
     createProduct: builder.mutation({
@@ -44,11 +51,12 @@ export const productApi = apiSlice.injectEndpoints({
   }),
 });
 
+// Export hooks
 export const {
   // Public
   useGetProductsQuery,
   useGetProductByIdQuery,
-  // Protected
+  // Seller/Admin
   useGetMyProductsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,

@@ -25,7 +25,9 @@ export default function AddProductPage() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(schema) });
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
 
   const onSubmit = async (data: any) => {
     try {
@@ -43,7 +45,7 @@ export default function AddProductPage() {
       );
 
       // Append video if exists
-      if (data.video?.[0]) formData.append("video", data.video[0]);
+      if (data.video?.[0]) formData.append("files", data.video[0]);
 
       await createProduct(formData).unwrap();
       alert("Product added successfully!");

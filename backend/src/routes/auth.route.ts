@@ -3,7 +3,7 @@ import {
   register,
   login,
   logout,
-  refreshTokenController,
+  refreshToken,
 } from "../controllers/auth.controller";
 
 const router = express.Router();
@@ -11,6 +11,6 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
-router.get("/refresh", refreshTokenController);
+router.post("/refresh", refreshToken);
 
 export default router;

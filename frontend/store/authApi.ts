@@ -1,4 +1,4 @@
-// api/authApi.ts
+// store/authApi.ts
 import { apiSlice } from "./apiSlice";
 
 export const authApi = apiSlice.injectEndpoints({
@@ -23,17 +23,23 @@ export const authApi = apiSlice.injectEndpoints({
       }),
     }),
     refresh: builder.mutation({
-      query: () => ({ url: "/auth/refresh", method: "POST" }),
+      query: () => ({
+        url: "/auth/refresh",
+        method: "POST",
+      }),
     }),
     logout: builder.mutation({
-      query: () => ({ url: "/auth/logout", method: "POST" }),
+      query: () => ({
+        url: "/auth/logout",
+        method: "POST",
+      }),
     }),
   }),
 });
 
 export const {
-  useLoginMutation,
   useRegisterMutation,
-  useRefreshMutation,
+  useLoginMutation,
+  useRefreshMutation, // ✅ make sure this exists
   useLogoutMutation,
 } = authApi;
