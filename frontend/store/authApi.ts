@@ -1,3 +1,4 @@
+// api/authApi.ts
 import { apiSlice } from "./apiSlice";
 
 export const authApi = apiSlice.injectEndpoints({

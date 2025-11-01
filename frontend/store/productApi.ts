@@ -1,37 +1,41 @@
+// api/productApi.ts
 import { apiSlice } from "./apiSlice";
 
 export const productApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    // --- PUBLIC ENDPOINTS ---
     getProducts: builder.query({
+      query: () => "/public/products",
+      providesTags: ["Product"],
+    }),
+    getProductById: builder.query({
+      query: (id: string) => `/public/products/${id}`,
+      providesTags: ["Product"],
+    }),
+
+    // --- PROTECTED ENDPOINTS (SELLER / ADMIN) ---
+    getMyProducts: builder.query({
       query: () => "/products",
       providesTags: ["Product"],
     }),
-
-    getSellerProducts: builder.query({
-      query: () => "/products/seller",
-      providesTags: ["Product"],
-    }),
-
-    addProduct: builder.mutation({
-      query: (data) => ({
+    createProduct: builder.mutation({
+      query: (formData: FormData) => ({
         url: "/products",
         method: "POST",
-        body: data,
+        body: formData,
       }),
       invalidatesTags: ["Product"],
     }),
-
     updateProduct: builder.mutation({
-      query: ({ id, data }) => ({
+      query: ({ id, ...data }: any) => ({
         url: `/products/${id}`,
         method: "PUT",
         body: data,
       }),
       invalidatesTags: ["Product"],
     }),
-
     deleteProduct: builder.mutation({
-      query: (id) => ({
+      query: (id: string) => ({
         url: `/products/${id}`,
         method: "DELETE",
       }),
@@ -41,9 +45,12 @@ export const productApi = apiSlice.injectEndpoints({
 });
 
 export const {
+  // Public
   useGetProductsQuery,
-  useGetSellerProductsQuery,
-  useAddProductMutation,
+  useGetProductByIdQuery,
+  // Protected
+  useGetMyProductsQuery,
+  useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
 } = productApi;
