@@ -1,12 +1,11 @@
-import ProtectedRoute from "@/components/ProtectedRoute";
+"use client";
+import OrderList from "@/components/buyer/OrderList";
 
-export default function BuyerDashboard() {
+export default function BuyerDashboardPage() {
   return (
-    <ProtectedRoute allowedRoles={["buyer"]}>
-      <div className="p-6">
-        <h1 className="text-3xl font-bold mb-4">Buyer Dashboard</h1>
-        <p>Here you can view your orders and track products.</p>
-      </div>
-    </ProtectedRoute>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Buyer Dashboard</h1>
+      <OrderList />
+    </div>
   );
 }
