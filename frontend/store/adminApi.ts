@@ -1,38 +1,36 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { RootState } from "./store";
+// store/adminApi.ts
+import { apiSlice } from "./apiSlice";
 
-const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:4000/api/admin",
-  credentials: "include",
-  prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth.accessToken;
-    if (token) headers.set("Authorization", `Bearer ${token}`);
-    return headers;
-  },
-});
-
-export const adminApi = createApi({
-  reducerPath: "adminApi",
-  baseQuery,
-  tagTypes: ["User", "Order"],
+export const adminApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getAllOrders: builder.query({
+      query: () => "/admin/orders",
+      providesTags: ["Order"],
+    }),
     getAllUsers: builder.query({
-      query: () => "/users",
+      query: () => "/admin/users",
       providesTags: ["User"],
     }),
     banUser: builder.mutation({
-      query: (userId: string) => ({
-        url: `/users/${userId}/ban`,
-        method: "PATCH",
+      query: (id: string) => ({
+        url: `/admin/users/ban/${id}`,
+        method: "PUT",
       }),
       invalidatesTags: ["User"],
     }),
-    getAllOrders: builder.query({
-      query: () => "/orders",
-      providesTags: ["Order"],
+    unbanUser: builder.mutation({
+      query: (id: string) => ({
+        url: `/admin/users/unban/${id}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["User"],
     }),
   }),
 });
 
-export const { useGetAllUsersQuery, useBanUserMutation, useGetAllOrdersQuery } =
-  adminApi;
+export const {
+  useGetAllOrdersQuery,
+  useGetAllUsersQuery,
+  useBanUserMutation,
+  useUnbanUserMutation,
+} = adminApi;

@@ -16,8 +16,10 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
   let result = await baseQuery(args, api, extraOptions);
 
+  // If access token expired
   if (result.error && result.error.status === 401) {
     console.log("Access token expired — refreshing...");
+
     const refreshResult = await baseQuery(
       { url: "/auth/refresh", method: "POST" },
       api,
@@ -26,7 +28,11 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 
     if (refreshResult.data) {
       const { accessToken, user } = refreshResult.data as any;
+
+      // Update redux state
       api.dispatch(setCredentials({ accessToken, user }));
+
+      // Retry the original query with the new token
       result = await baseQuery(args, api, extraOptions);
     } else {
       api.dispatch(logout());
@@ -39,6 +45,6 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Product", "User"],
-  endpoints: () => ({}),
+  tagTypes: ["User", "Order"],
+  endpoints: (builder) => ({}),
 });

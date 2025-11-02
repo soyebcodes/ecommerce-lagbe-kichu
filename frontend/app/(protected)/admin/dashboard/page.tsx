@@ -1,7 +1,7 @@
 "use client";
 
-import OrderStats from "@/components/admin/OrderStatus";
 import UserList from "@/components/admin/UserList";
+import OrderStats from "@/components/admin/OrderStats";
 
 export default function AdminDashboardPage() {
   return (
