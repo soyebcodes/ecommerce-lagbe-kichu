@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 
 export default function SellerDashboard() {
@@ -12,6 +11,9 @@ export default function SellerDashboard() {
         </Link>
         <Link href="/seller/dashboard/products/add" className="text-blue-600">
           Add Product
+        </Link>
+        <Link href="/seller/dashboard/orders" className="text-blue-600">
+          Orders
         </Link>
       </nav>
     </div>
