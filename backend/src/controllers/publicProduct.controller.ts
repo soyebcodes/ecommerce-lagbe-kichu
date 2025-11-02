@@ -1,38 +1,40 @@
 import { Request, Response } from "express";
-import { catchAsync } from "../utils/catchAsync";
 import { Product } from "../models/product.model";
 
-export const getAllProducts = catchAsync(
-  async (req: Request, res: Response) => {
-    const { search, category, minPrice, maxPrice } = req.query;
-    const filter: any = {};
+// ✅ Get all products (for buyers/public)
+export const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await Product.find()
+      .populate("seller", "name email")
+      .sort({ createdAt: -1 });
 
-    if (search) filter.title = { $regex: search, $options: "i" };
-    if (category) filter.category = category;
-    if (minPrice || maxPrice)
-      filter.price = {
-        ...(minPrice && { $gte: minPrice }),
-        ...(maxPrice && { $lte: maxPrice }),
-      };
-
-    const products = await Product.find(filter).populate(
-      "seller",
-      "name email"
-    );
-    res.json({ success: true, data: products });
+    res.status(200).json({
+      success: true,
+      data: products,
+    });
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ success: false, message: "Server error" });
   }
-);
+};
 
-export const getProductById = catchAsync(
-  async (req: Request, res: Response) => {
-    const product = await Product.findById(req.params.id).populate(
-      "seller",
-      "name email"
-    );
+// ✅ Get single product by ID (for buyers/public)
+export const getProductById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id).populate("seller", "name email");
+
     if (!product)
       return res
         .status(404)
         .json({ success: false, message: "Product not found" });
-    res.json({ success: true, data: product });
+
+    res.status(200).json({
+      success: true,
+      data: product,
+    });
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    res.status(500).json({ success: false, message: "Server error" });
   }
-);
+};

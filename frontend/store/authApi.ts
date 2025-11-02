@@ -1,4 +1,3 @@
-// store/authApi.ts
 import { apiSlice } from "./apiSlice";
 
 export const authApi = apiSlice.injectEndpoints({
@@ -40,6 +39,6 @@ export const authApi = apiSlice.injectEndpoints({
 export const {
   useRegisterMutation,
   useLoginMutation,
-  useRefreshMutation, // ✅ make sure this exists
+  useRefreshMutation,
   useLogoutMutation,
 } = authApi;
