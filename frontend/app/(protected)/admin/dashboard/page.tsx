@@ -1,12 +1,14 @@
-import ProtectedRoute from "@/components/ProtectedRoute";
+"use client";
 
-export default function AdminDashboard() {
+import UserList from "@/components/admin/UserList";
+import OrderStats from "@/components/admin/OrderStats";
+
+export default function AdminDashboardPage() {
   return (
-    <ProtectedRoute allowedRoles={["admin"]}>
-      <div className="p-6">
-        <h1 className="text-3xl font-bold mb-4">Admin Dashboard</h1>
-        <p>Here you can manage users, products, and view reports.</p>
-      </div>
-    </ProtectedRoute>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
+      <OrderStats />
+      <UserList />
+    </div>
   );
 }
